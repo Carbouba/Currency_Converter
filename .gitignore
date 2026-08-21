@@ -1,0 +1,4 @@
+.evn
+.venv
+.idea
+db.sqlite3

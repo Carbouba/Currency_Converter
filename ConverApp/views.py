@@ -11,6 +11,7 @@ headers = {
     "Authorization": f"Bearer {api_key}"
 }
 url = 'https://allratestoday.com/api/v1/rates'
+get_symbole_urls = 'https://allratestoday.com/api/v1/symbols'
 
 
 def index(request):
@@ -24,8 +25,13 @@ def convert_currency(request):
     target = request.GET.get('target')
     amount = request.GET.get('amount')
 
+    try:
+        float(amount)
+    except ValueError:
+        return JsonResponse({'error': 'Entrez un montant valide'})
+
     if not source or not target:
-        return JsonResponse({'error: source et target requis'}, status=400)
+        return JsonResponse({'error': 'source et target requis'}, status=400)
 
     params = {
         "source": source,
@@ -36,8 +42,18 @@ def convert_currency(request):
     try:
         response = requests.get(url=url, params=params,
                                 headers=headers, timeout=5)
+        response.raise_for_status()
     except requests.exceptions.RequestException as e:
-        return JsonResponse({'error: Erreur API externe'})
+        return JsonResponse({'error': 'Erreur API externe'}, status=502)
 
     return JsonResponse(response.json())
 
+@require_GET
+def get_symbols(request):
+    try:
+        response = requests.get(get_symbole_urls)
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        return JsonResponse({'error': 'Erreur API externe'}, status=502)
+
+    return JsonResponse(response.json())

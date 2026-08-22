@@ -23,14 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
     firstSelect.addEventListener('change', () => {
         convert(firstSelect.value, secondSelect.value, firstInput.value)
     })
-    firstInput.addEventListener('change', () => {
+    firstInput.addEventListener('input', () => {
         convert(firstSelect.value, secondSelect.value, firstInput.value)
     })
     secondSelect.addEventListener('change', () => {
-        convert(firstSelect.value, secondSelect.value, firstInput.value)
-    })
-
-    document.querySelector('#btn').addEventListener('click', () => {
         convert(firstSelect.value, secondSelect.value, firstInput.value)
     })
 
@@ -52,8 +48,6 @@ function switchCode(bCode, tCode, bAmount) {
     secondSelect.value = bCode
 
     console.log(firstSelect.value, secondSelect.value)
-
-    // convert(firstSelect, secondSelect, bAmount)
 }
 
 /*
@@ -62,25 +56,32 @@ function switchCode(bCode, tCode, bAmount) {
 * Then it create the option of select input using data that she
 * get since API.*/
 async function getCurrencySelects() {
-    const response = await fetch('https://allratestoday.com/api/v1/symbols')
-    if (!response.ok) {
-        throw new Error(response.status)
+    try {
+        const response = await fetch('/api/symbols/')
+
+        if (!response.ok) {
+            throw new Error(response.status)
+        }
+        const data = await response.json()
+
+        data.currencies.forEach(currency => {
+            // Create first select options
+            const optionSource = document.createElement('option')
+            optionSource.value = currency.code
+            optionSource.textContent = `${currency.code} - ${currency.name}`
+            firstSelect.appendChild(optionSource)
+
+            // Create second select options
+            const optionTarget = document.createElement('option')
+            optionTarget.value = currency.code
+            optionTarget.textContent = `${currency.code} - ${currency.name}`
+            secondSelect.appendChild(optionTarget)
+        })
+    } catch (error) {
+        exchangeRate.innerHTML = `Erreur : impossible de convertir. Réessaie plus tard.`
+        console.error(error)
+
     }
-    const data = await response.json()
-
-    data.currencies.forEach(currency => {
-        // Create first select options
-        const optionSource = document.createElement('option')
-        optionSource.value = currency.code
-        optionSource.textContent = `${currency.code} - ${currency.name}`
-        firstSelect.appendChild(optionSource)
-
-        // Create second select options
-        const optionTarget = document.createElement('option')
-        optionTarget.value = currency.code
-        optionTarget.textContent = `${currency.code} - ${currency.name}`
-        secondSelect.appendChild(optionTarget)
-    })
 }
 
 /*
@@ -95,23 +96,28 @@ async function convert(BASE_CODE, TARGET_CODE, AMOUNT) {
 
     if (!amount) {
         alert('Amount require')
-    }else if (!source || !target){
+    } else if (!source || !target) {
         alert('source et target requis')
     } else {
         const params = new URLSearchParams(
             {source, target, amount})
 
-        const response = await fetch(`/api/convert/?${params}`)
+        try {
+            const response = await fetch(`/api/convert/?${params}`)
 
-        if (!response.ok) {
-            throw new Error(response.status)
+            if (!response.ok) {
+                throw new Error(response.status)
+            }
+            const data = await response.json()
+            secondInput.value = data.to.amount
+            baseMeta.innerHTML = `${data.from.amount} ${data.from.currency} = `
+            targetMeta.innerHTML = `${data.to.amount} ${data.to.currency}`
+            exchangeRate.innerHTML = `Taux de change : 1 ${data.from.currency} = ${data.rate} ${data.to.currency}`
+
+            console.log(data)
+        } catch (error) {
+            exchangeRate.innerHTML = `Erreur : impossible de convertir. Réessaie plus tard.`
+            console.error(error)
         }
-        const data = await response.json()
-        secondInput.value = data.to.amount
-        baseMeta.innerHTML = `${data.from.amount} ${data.from.currency} = `
-        targetMeta.innerHTML = `${data.to.amount} ${data.to.currency}`
-        exchangeRate.innerHTML = `Taux de change : 1 ${data.from.currency} = ${data.rate} ${data.to.currency}`
-        document.querySelector('#result').textContent = `${data.from.currency} - ${data.to.currency}`
-        console.log(data)
     }
 }

@@ -1,30 +1,302 @@
-body{
-    box-sizing: border-box;
-    background: gray;
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
+/* =========================================================
+   Currency Converter — Visual System
+   ---------------------------------------------------------
+   Palette
+     --ink         #16181D  texte principal (montant, titres)
+     --muted       #6B7280  texte secondaire (meta, taux)
+     --line        #E5E8EB  bordures, séparateurs
+     --surface     #F4F6F8  fond des champs (select / input)
+     --surface-hz  #ECEFF2  fond des champs au survol
+     --card        #FFFFFF  fond de la carte
+     --page        #EEF1F4  fond de page
+     --accent      #1E8E5A  vert — clin d'œil aux courbes de
+                              marché en hausse, utilisé pour le
+                              focus et le bouton d'inversion
+     --accent-dk   #146B44  accent, pressé / icône
+
+   Typographie
+     Montant  : Inter 800, chiffres tabulaires — le seul texte
+     que l'œil doit pouvoir comparer instantanément, donc les
+     chiffres s'alignent comme sur un registre comptable.
+     Le reste : Inter 400–600, tailles resserrées.
+
+   Signature
+     Le bouton d'inversion est le seul geste "vivant" d'une
+     page par ailleurs très sobre : cercle discret, rotation
+     à l'usage, et sur mobile l'icône pivote à 90° pour
+     signaler un échange vertical plutôt qu'horizontal.
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --ink: #16181d;
+  --muted: #6b7280;
+  --muted-soft: #9aa1ab;
+  --line: #e5e8eb;
+  --surface: #f4f6f8;
+  --surface-hover: #eceff2;
+  --card: #ffffff;
+  --page: #eef1f4;
+  --accent: #1e8e5a;
+  --accent-dark: #146b44;
+  --accent-soft: #e6f4ec;
+  --radius-card: 28px;
+  --radius-field: 14px;
+  --shadow-card:
+    0 1px 2px rgba(16, 24, 32, 0.04),
+    0 20px 40px -20px rgba(16, 24, 32, 0.18);
 }
-#container{
-    background: darkcyan;
-    padding: 10px;
-    color: aliceblue;
-    text-align: center;
+
+* {
+  box-sizing: border-box;
 }
-.currency-container{
-    display: flex;
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--page);
+  color: var(--ink);
 }
-#first-container, #second-container{
-    padding: 10px;
-    background: red;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
+
+body {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 64px 20px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
-.currency-container .select{
-    width: 100%;
-    height: 50px;
-    margin-bottom: 5px;
+
+/* Ancien nœud de debug, doublon de #target-meta — masqué */
+#result {
+  display: none;
+}
+
+#container {
+  width: 100%;
+  max-width: 460px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 32px 32px 28px;
+}
+
+/* ---------- Bloc résultat ---------- */
+
+.meta-container {
+  margin-bottom: 28px;
+}
+
+#base-meta {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+#target-meta {
+  margin: 4px 0 0;
+  font-size: 34px;
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  min-height: 1.15em; /* évite un saut de hauteur avant le premier résultat */
+}
+
+#exchange-rate {
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+#exchange-rate:empty {
+  display: none;
+}
+
+#update-at {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--muted-soft);
+}
+#update-at:empty {
+  display: none;
+}
+
+/* ---------- Contrôles de conversion ---------- */
+
+#currency-container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 20px;
+}
+
+#first-container,
+#second-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+/* Selects : pilule plate, chevron custom, styles natifs neutralisés */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  padding: 12px 36px 12px 14px;
+  border-radius: var(--radius-field);
+  border: 1px solid transparent;
+  background-color: var(--surface);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B7280' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+select:hover {
+  background-color: var(--surface-hover);
+}
+
+select:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* Champs de montant */
+input[type='number'] {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--radius-field);
+  border: 1px solid transparent;
+  background-color: var(--surface);
+  font-size: 16px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+input[type='number']:hover:not(:disabled) {
+  background-color: var(--surface-hover);
+}
+
+input[type='number']:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+  background-color: var(--card);
+}
+
+input[type='number']:disabled {
+  color: var(--muted);
+  cursor: default;
+}
+
+/* Masque les flèches natives du input number pour un champ épuré */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+/* ---------- Bouton d'inversion — la signature ---------- */
+
+#switchBtn {
+  justify-self: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: transparent; /* masque visuellement le libellé "Switch" */
+  font-size: 0;
+  position: relative;
+  cursor: pointer;
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+#switchBtn::before {
+  content: '⇄';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--accent-dark);
+}
+
+#switchBtn:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+#switchBtn:active {
+  transform: rotate(180deg) scale(0.92);
+}
+
+#switchBtn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+  border-color: var(--accent);
+}
+
+/* ---------- Responsive : les deux côtés s'empilent ---------- */
+
+@media (max-width: 480px) {
+  #container {
+    padding: 24px;
+    border-radius: 22px;
+  }
+
+  #target-meta {
+    font-size: 28px;
+  }
+
+  #currency-container {
+    grid-template-columns: 1fr;
+  }
+
+  #switchBtn {
+    margin: 4px 0;
+  }
+
+  #switchBtn::before {
+    transform: rotate(90deg);
+  }
+
+  #switchBtn:active {
+    transform: rotate(90deg) scale(0.92);
+  }
+}
+
+/* ---------- Préférence de mouvement réduit ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  #switchBtn,
+  #switchBtn::before,
+  select,
+  input[type='number'] {
+    transition: none !important;
+  }
+  #switchBtn:active {
+    transform: none;
+  }
 }

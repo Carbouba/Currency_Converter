@@ -7,33 +7,49 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Currency Converter</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="{% static 'ConverApp/style.css' %}">
 
 </head>
 <body>
-{##}
-{#<button id="btn">Convert</button>#}
-
-<p id="result"></p>
-<div id="container" class="card bg-base-100 w-96 shadow-sm">
+<div id="container" class="bg-white border border-slate-200 rounded-[32px] p-8 max-w-2xl mx-auto shadow-lg space-y-6">
     <div class="meta-container">
-        <h5 id="base-meta"></h5>
-        <h1 id="target-meta"></h1>
+        <h5 id="base-meta" class="text-slate-500 text-lg font-medium"></h5>
+        <h1 id="target-meta" class="text-3xl font-extrabold text-slate-900 mt-1"></h1>
         <p id="exchange-rate"></p>
-        <p id="update-at"></p>
+        <p id="update-at" class="text-xs text-slate-400 mt-2 block"></p>
     </div>
 
-    <div class="currency-container">
-        <div id="first-container">
-            <select class="select" name="currency-first" id="currency-first"></select>
-            <input type="number" id="first-input" autofocus>
-        </div>
-        <button id="switchBtn">Switch</button>
-        <div id="second-container">
-            <select class="select" aria-placeholder="Choisir la devise cible" name="currency-second" id="currency-second"></select>
-            <input type="number" id="second-input" disabled>
-        </div>
-    </div>
+    <!-- Le conteneur principal en grille à 3 colonnes -->
+<div id="currency-container" class="grid grid-cols-[1fr_auto_1fr] gap-x-6 gap-y-4 items-center">
+
+    <!-- ==================== LIGNE DU HAUT ==================== -->
+
+    <!-- 1. Le menu déroulant de gauche (Source) -->
+    <select id="currency-first" class="select select-bordered bg-slate-50 border-slate-200 rounded-xl w-full">
+        <!-- Tes options d'API s'injecteront ici -->
+    </select>
+
+    <!-- 2. Le bouton central Switch (avec l'icône de flèches) -->
+    <button id="switchBtn" class="btn btn-circle btn-sm btn-ghost hover:bg-slate-100 border border-slate-200 text-lg">⇆</button>
+
+    <!-- 3. Le menu déroulant de droite (Cible) -->
+    <select id="currency-second" class="select select-bordered bg-slate-50 border-slate-200 rounded-xl w-full">
+        <!-- Tes options d'API s'injecteront ici -->
+    </select>
+
+    <!-- ==================== LIGNE DU BAS ==================== -->
+
+    <!-- 4. La saisie de montant de gauche (Source) -->
+    <input type="number" id="first-input" class="input input-bordered bg-slate-50 border-slate-200 rounded-xl w-full" autofocus>
+
+    <!-- 5. L'ESPACEUR VIDE CENTRAL (Obligatoire pour que la grille reste alignée !) -->
+    <div class="w-8 h-8"></div>
+
+    <!-- 6. L'affichage du montant converti de droite (Cible - Désactivé) -->
+    <input type="number" id="second-input" class="input input-bordered bg-slate-50 border-slate-200 rounded-xl w-full" disabled>
+
+</div>
 </div>
 
 

@@ -79,7 +79,7 @@ async function getCurrencySelects() {
             optionTarget.value = currency.code
             optionTarget.textContent = `${currency.code} - ${currency.name}`
              if (currency.code === 'XOF'){
-                optionSource.selected = 'XOF'
+                optionTarget.selected = 'XOF'
             }
             secondSelect.appendChild(optionTarget)
         })

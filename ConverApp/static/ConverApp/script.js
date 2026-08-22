@@ -69,12 +69,18 @@ async function getCurrencySelects() {
             const optionSource = document.createElement('option')
             optionSource.value = currency.code
             optionSource.textContent = `${currency.code} - ${currency.name}`
+            if (currency.code === 'USD'){
+                optionSource.selected = 'USD'
+            }
             firstSelect.appendChild(optionSource)
 
             // Create second select options
             const optionTarget = document.createElement('option')
             optionTarget.value = currency.code
             optionTarget.textContent = `${currency.code} - ${currency.name}`
+             if (currency.code === 'XOF'){
+                optionSource.selected = 'XOF'
+            }
             secondSelect.appendChild(optionTarget)
         })
     } catch (error) {

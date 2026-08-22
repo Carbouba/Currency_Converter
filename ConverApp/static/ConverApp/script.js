@@ -5,6 +5,10 @@ const firstInput = document.querySelector('#first-input')
 const secondSelect = document.querySelector('#currency-second')
 const secondInput = document.querySelector('#second-input')
 const switchBtn = document.querySelector('#switchBtn')
+const baseMeta = document.querySelector('#base-meta')
+const targetMeta = document.querySelector('#target-meta')
+const exchangeRate = document.querySelector('#exchange-rate')
+const updateAt = document.querySelector('#update-at')
 
 /*
 * Attempt to load all the DOM content*/
@@ -33,8 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
     /*
     * Attempt to an EventListener when user click on the
     switchBtn and call switchCode function*/
-    document.querySelector('#switchBtn').addEventListener('click', () => {
-        switchCode(firstSelect.value, firstInput.value, secondSelect.value)
+    switchBtn.addEventListener('click', () => {
+        switchCode(firstSelect.value, secondSelect.value, firstInput.value)
+        convert(firstSelect.value, secondSelect.value, firstInput.value)
         console.log('Switch')
     })
 })
@@ -62,10 +67,6 @@ async function getCurrencySelects() {
         throw new Error(response.status)
     }
     const data = await response.json()
-
-    const firstContainer = document.querySelector('#first-currency-container')
-    const secondContainer = document.querySelector('#second-currency-container')
-
 
     data.currencies.forEach(currency => {
         // Create first select options
@@ -107,6 +108,9 @@ async function convert(BASE_CODE, TARGET_CODE, AMOUNT) {
         }
         const data = await response.json()
         secondInput.value = data.to.amount
+        baseMeta.innerHTML = `${data.from.amount} ${data.from.currency} = `
+        targetMeta.innerHTML = `${data.to.amount} ${data.to.currency}`
+        exchangeRate.innerHTML = `Taux de change : 1 ${data.from.currency} = ${data.rate} ${data.to.currency}`
         document.querySelector('#result').textContent = `${data.from.currency} - ${data.to.currency}`
         console.log(data)
     }

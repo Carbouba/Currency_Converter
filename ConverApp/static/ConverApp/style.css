@@ -1,0 +1,30 @@
+body{
+    box-sizing: border-box;
+    background: gray;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+#container{
+    background: darkcyan;
+    padding: 10px;
+    color: aliceblue;
+    text-align: center;
+}
+.currency-container{
+    display: flex;
+}
+#first-container, #second-container{
+    padding: 10px;
+    background: red;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+.currency-container .select{
+    width: 100%;
+    height: 50px;
+    margin-bottom: 5px;
+}

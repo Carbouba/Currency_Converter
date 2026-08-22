@@ -40,3 +40,4 @@ def convert_currency(request):
         return JsonResponse({'error: Erreur API externe'})
 
     return JsonResponse(response.json())
+

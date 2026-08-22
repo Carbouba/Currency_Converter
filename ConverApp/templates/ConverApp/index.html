@@ -8,13 +8,34 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Currency Converter</title>
     <link rel="stylesheet" href="{% static 'ConverApp/style.css' %}">
-    <script src="{% static 'ConverApp/script.js' %}"></script>
+
 </head>
 <body>
 
 <button id="btn">Convert</button>
 
 <p id="result"></p>
+<div class="container">
+    <div class="meta-container">
+        <h5 id="base-meta"></h5>
+        <h1 id="target-meta"></h1>
+        <p id="update-at"></p>
+    </div>
 
+    <div class="currency-container">
+        <div id="first-container">
+            <select name="currency-first" id="currency-first"></select>
+            <input type="number" id="first-input" autofocus>
+        </div>
+        <button id="switchBtn">Switch</button>
+        <div id="second-container">
+            <select name="currency-second" id="currency-second"></select>
+            <input type="number" id="second-input" disabled>
+        </div>
+    </div>
+</div>
+
+
+<script src="{% static 'ConverApp/script.js' %}"></script>
 </body>
 </html>

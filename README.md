@@ -86,3 +86,6 @@ en gardant la clé côté serveur (variable d'environnement, jamais commitée).
 
 Ce projet est libre et ouvert aux contributions — suggestions de fonctionnalités, corrections de bugs, ou améliorations sont les bienvenues. N'hésitez pas à ouvrir une issue ou une pull request.
 
+📄 Licence
+
+Distribué sous licence MIT — voir le fichier [LICENSE](https://github.com/Carbouba/Currency_Converter/blob/main/LICENSE) pour plus de détails.

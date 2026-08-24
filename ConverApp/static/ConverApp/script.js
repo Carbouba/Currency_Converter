@@ -25,7 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
     alertBtn.addEventListener('click', hideAlert)
 })
 
-function showAlert() {
+function showAlert(message) {
+    document.querySelector('#alert-message').textContent = message
     clearTimeout(alertTimeout)
     alertDiv.hidden = false
     alertTimeout = setTimeout(hideAlert, 3000)
@@ -102,9 +103,8 @@ async function getCurrencySelects() {
             secondSelect.appendChild(optionTarget)
         })
     } catch (error) {
-        exchangeRate.innerHTML = `Erreur : impossible de convertir. Réessaie plus tard.`
         console.error(error)
-        showAlert()
+        showAlert('Erreur : impossible de convertir. Réessaie plus tard.')
 
     }
 }
@@ -119,10 +119,10 @@ async function convert(BASE_CODE, TARGET_CODE, AMOUNT) {
     const target = TARGET_CODE
     const amount = AMOUNT
 
-    if (!amount) {
-        alert('Amount require')
+    if (amount <=  0) {
+        showAlert('Veuillez entrez un montant valide')
     } else if (!source || !target) {
-        alert('source et target requis')
+        showAlert('Veuillez choisir une devise source et une devise cible')
     } else {
         const params = new URLSearchParams(
             {source, target, amount})
@@ -141,12 +141,8 @@ async function convert(BASE_CODE, TARGET_CODE, AMOUNT) {
 
             console.log(data)
         } catch (error) {
-            showAlert()
+            showAlert('Erreur : impossible de convertir. Réessaie plus tard.')
             console.error(error)
         }
     }
 }
-
-// function createAlerte(type, message){
-//
-// }

@@ -12,6 +12,7 @@
 
 </head>
 <body>
+<main class="page-content">
 <div id="container" class="bg-white border border-slate-200 rounded-[32px] p-8 max-w-2xl mx-auto shadow-lg space-y-6">
     <div class="meta-container">
         <h5 id="base-meta" class="text-slate-500 text-lg font-medium"></h5>
@@ -51,6 +52,15 @@
 
 </div>
 </div>
+</main>
+
+<footer class="site-footer" aria-label="Informations de copyright">
+    <p>
+        &copy; {% now "Y" %}
+        <a href="https://github.com/Carbouba" target="_blank" rel="noopener noreferrer">Carbouba</a>
+        &mdash; Currency Converter. Tous droits r&eacute;serv&eacute;s.
+    </p>
+</footer>
 
 
 <script src="{% static 'ConverApp/script.js' %}"></script>

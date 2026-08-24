@@ -63,10 +63,41 @@ body {
 
 body {
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 64px 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 64px 20px 24px;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.page-content {
+  width: 100%;
+}
+
+.site-footer {
+  width: 100%;
+  margin-top: 28px;
+  color: var(--muted-soft);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.site-footer a {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.site-footer a:hover,
+.site-footer a:focus-visible {
+  color: var(--accent-dark);
+  text-decoration: underline;
 }
 
 /* Ancien nœud de debug, doublon de #target-meta — masqué */

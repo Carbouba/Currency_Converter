@@ -8,7 +8,12 @@ const switchBtn = document.querySelector('#switchBtn')
 const baseMeta = document.querySelector('#base-meta')
 const targetMeta = document.querySelector('#target-meta')
 const exchangeRate = document.querySelector('#exchange-rate')
-const updateAt = document.querySelector('#update-at')
+// const updateAt = document.querySelector('#update-at')
+const alertBtn = document.querySelector('#alert-btn')
+const alertDiv = document.querySelector('#alert-div')
+let alertTimeout
+
+alertDiv.hidden = true
 
 /*
 * Attempt to load all the DOM content*/
@@ -16,30 +21,43 @@ document.addEventListener('DOMContentLoaded', () => {
     // Get all currencies code and symboles
     getCurrencySelects()
 
-    /*
+    // Close the alert PopUp when the user click on the button
+    alertBtn.addEventListener('click', hideAlert)
+})
+
+function showAlert() {
+    clearTimeout(alertTimeout)
+    alertDiv.hidden = false
+    alertTimeout = setTimeout(hideAlert, 3000)
+}
+
+function hideAlert() {
+    alertDiv.hidden = true
+    clearTimeout(alertTimeout)
+}
+
+/*
 * Attempt for an Event listener when user select an
 * currency option or if amount input is change.
 * Call the convert function*/
-    firstSelect.addEventListener('change', () => {
-        convert(firstSelect.value, secondSelect.value, firstInput.value)
-    })
-    firstInput.addEventListener('input', () => {
-        convert(firstSelect.value, secondSelect.value, firstInput.value)
-    })
-    secondSelect.addEventListener('change', () => {
-        convert(firstSelect.value, secondSelect.value, firstInput.value)
-    })
-
-    /*
-    * Attempt to an EventListener when user click on the
-    switchBtn and call switchCode function*/
-    switchBtn.addEventListener('click', () => {
-        switchCode(firstSelect.value, secondSelect.value, firstInput.value)
-        convert(firstSelect.value, secondSelect.value, firstInput.value)
-        console.log('Switch')
-    })
+firstSelect.addEventListener('change', () => {
+    convert(firstSelect.value, secondSelect.value, firstInput.value)
+})
+firstInput.addEventListener('input', () => {
+    convert(firstSelect.value, secondSelect.value, firstInput.value)
+})
+secondSelect.addEventListener('change', () => {
+    convert(firstSelect.value, secondSelect.value, firstInput.value)
 })
 
+/*
+* Attempt to an EventListener when user click on the
+switchBtn and call switchCode function*/
+switchBtn.addEventListener('click', () => {
+    switchCode(firstSelect.value, secondSelect.value, firstInput.value)
+    convert(firstSelect.value, secondSelect.value, firstInput.value)
+    console.log('Switch')
+})
 /*
 * This function switch between BASE_CODE and TARGET_CODE
 * Then call convert() function to update data */
@@ -69,7 +87,7 @@ async function getCurrencySelects() {
             const optionSource = document.createElement('option')
             optionSource.value = currency.code
             optionSource.textContent = `${currency.code} - ${currency.name}`
-            if (currency.code === 'USD'){
+            if (currency.code === 'USD') {
                 optionSource.selected = 'USD'
             }
             firstSelect.appendChild(optionSource)
@@ -78,7 +96,7 @@ async function getCurrencySelects() {
             const optionTarget = document.createElement('option')
             optionTarget.value = currency.code
             optionTarget.textContent = `${currency.code} - ${currency.name}`
-             if (currency.code === 'XOF'){
+            if (currency.code === 'XOF') {
                 optionTarget.selected = 'XOF'
             }
             secondSelect.appendChild(optionTarget)
@@ -86,6 +104,7 @@ async function getCurrencySelects() {
     } catch (error) {
         exchangeRate.innerHTML = `Erreur : impossible de convertir. Réessaie plus tard.`
         console.error(error)
+        showAlert()
 
     }
 }
@@ -122,8 +141,12 @@ async function convert(BASE_CODE, TARGET_CODE, AMOUNT) {
 
             console.log(data)
         } catch (error) {
-            exchangeRate.innerHTML = `Erreur : impossible de convertir. Réessaie plus tard.`
+            showAlert()
             console.error(error)
         }
     }
 }
+
+// function createAlerte(type, message){
+//
+// }

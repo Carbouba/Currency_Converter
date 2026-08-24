@@ -7,51 +7,72 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Currency Converter</title>
+    <!-- Charge DaisyUI v5 -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
+
+    <!-- Charge Tailwind v4 -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="{% static 'ConverApp/style.css' %}">
 
 </head>
 <body>
 <main class="page-content">
-<div id="container" class="bg-white border border-slate-200 rounded-[32px] p-8 max-w-2xl mx-auto shadow-lg space-y-6">
-    <div class="meta-container">
-        <h5 id="base-meta" class="text-slate-500 text-lg font-medium"></h5>
-        <h1 id="target-meta" class="text-3xl font-extrabold text-slate-900 mt-1"></h1>
-        <p id="exchange-rate"></p>
-        <p id="update-at" class="text-xs text-slate-400 mt-2 block"></p>
+    <!-- Alert with buttons + responsive -->
+    <div role="alert" class="alert alert-vertical sm:alert-horizontal" id="alert-div">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+             class="stroke-current text-info h-6 w-6 shrink-0">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span>Erreur : impossible de convertir. Réessaie plus tard.</span>
+        <div>
+            <button id="alert-btn" class="btn btn-sm btn-error">Close</button>
+        </div>
     </div>
 
-    <!-- Le conteneur principal en grille à 3 colonnes -->
-<div id="currency-container" class="grid grid-cols-[1fr_auto_1fr] gap-x-6 gap-y-4 items-center">
+    <div id="container" class="bg-white border border-slate-200 rounded-[32px] p-8 max-w-2xl mx-auto space-y-6">
+        <div class="meta-container">
+            <h5 id="base-meta" class="text-slate-500 text-lg font-medium"></h5>
+            <h1 id="target-meta" class="text-3xl font-extrabold text-slate-900 mt-1"></h1>
+            <p id="exchange-rate"></p>
+            <p id="update-at" class="text-xs text-slate-400 mt-2 block"></p>
+        </div>
 
-    <!-- ==================== LIGNE DU HAUT ==================== -->
+        <!-- Le conteneur principal en grille à 3 colonnes -->
+        <div id="currency-container" class="grid grid-cols-[1fr_auto_1fr] gap-x-6 gap-y-4 items-center">
 
-    <!-- 1. Le menu déroulant de gauche (Source) -->
-    <select id="currency-first" class="select select-bordered bg-slate-50 border-slate-200 rounded-xl w-full">
-        <!-- Tes options d'API s'injecteront ici -->
-    </select>
+            <!-- ==================== LIGNE DU HAUT ==================== -->
 
-    <!-- 2. Le bouton central Switch (avec l'icône de flèches) -->
-    <button id="switchBtn" class="btn btn-circle btn-sm btn-ghost hover:bg-slate-100 border border-slate-200 text-lg">⇆</button>
+            <!-- 1. Le menu déroulant de gauche (Source) -->
+            <select id="currency-first" class="select select-bordered bg-slate-50 border-slate-200 rounded-xl w-full">
+                <!-- Tes options d'API s'injecteront ici -->
+            </select>
 
-    <!-- 3. Le menu déroulant de droite (Cible) -->
-    <select id="currency-second" class="select select-bordered bg-slate-50 border-slate-200 rounded-xl w-full">
-        <!-- Tes options d'API s'injecteront ici -->
-    </select>
+            <!-- 2. Le bouton central Switch (avec l'icône de flèches) -->
+            <button id="switchBtn"
+                    class="btn btn-circle btn-sm btn-ghost hover:bg-slate-100 border border-slate-200 text-lg">⇆
+            </button>
 
-    <!-- ==================== LIGNE DU BAS ==================== -->
+            <!-- 3. Le menu déroulant de droite (Cible) -->
+            <select id="currency-second" class="select select-bordered bg-slate-50 border-slate-200 rounded-xl w-full">
+                <!-- Tes options d'API s'injecteront ici -->
+            </select>
 
-    <!-- 4. La saisie de montant de gauche (Source) -->
-    <input type="number" id="first-input" class="input input-bordered bg-slate-50 border-slate-200 rounded-xl w-full" autofocus>
+            <!-- ==================== LIGNE DU BAS ==================== -->
 
-    <!-- 5. L'ESPACEUR VIDE CENTRAL (Obligatoire pour que la grille reste alignée !) -->
-    <span class="justify-self-center text-lg font-semibold text-slate-400" aria-hidden="true">=</span>
+            <!-- 4. La saisie de montant de gauche (Source) -->
+            <input type="number" id="first-input"
+                   class="input input-bordered bg-slate-50 border-slate-200 rounded-xl w-full" autofocus>
 
-    <!-- 6. L'affichage du montant converti de droite (Cible - Désactivé) -->
-    <input type="number" id="second-input" class="input input-bordered bg-slate-50 border-slate-200 rounded-xl w-full" disabled>
+            <!-- 5. L'ESPACEUR VIDE CENTRAL (Obligatoire pour que la grille reste alignée !) -->
+            <span class="justify-self-center text-lg font-semibold text-slate-400" aria-hidden="true">=</span>
 
-</div>
-</div>
+            <!-- 6. L'affichage du montant converti de droite (Cible - Désactivé) -->
+            <input type="number" id="second-input"
+                   class="input input-bordered bg-slate-50 border-slate-200 rounded-xl w-full" disabled>
+
+        </div>
+    </div>
 </main>
 
 <footer class="site-footer" aria-label="Informations de copyright">

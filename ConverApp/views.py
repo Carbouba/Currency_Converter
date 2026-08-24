@@ -10,7 +10,7 @@ api_key = config('API_KEY')
 headers = {
     "Authorization": f"Bearer {api_key}"
 }
-url = 'https://allratestoday.com/api/v1/rates'
+# url = 'https://allratestoday.com/api/v1/rates'
 get_symbole_urls = 'https://allratestoday.com/api/v1/symbols'
 
 

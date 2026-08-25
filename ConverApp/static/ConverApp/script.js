@@ -12,6 +12,10 @@ const exchangeRate = document.querySelector('#exchange-rate')
 const alertBtn = document.querySelector('#alert-btn')
 const alertDiv = document.querySelector('#alert-div')
 let alertTimeout
+// Initialize Tom Select
+const monSelect = new TomSelect('#select-beast', {
+        create: false, // disable user typing creation for this example
+    });
 
 alertDiv.hidden = true
 
@@ -56,10 +60,15 @@ firstSelect.addEventListener('change', () => {
     convert(firstSelect.value, secondSelect.value, firstInput.value)
 })
 firstInput.addEventListener('input', () => {
-    convert(firstSelect.value, secondSelect.value, firstInput.value)
+    convert(monSelect.getValue(), secondSelect.value, firstInput.value)
 })
 secondSelect.addEventListener('change', () => {
-    convert(firstSelect.value, secondSelect.value, firstInput.value)
+    convert(monSelect.getValue(), secondSelect.value, firstInput.value)
+})
+
+document.querySelector('#select-beast').addEventListener('change', () => {
+    console.log(monSelect.getValue())
+    convert(monSelect.getValue(), secondSelect.value, firstInput.value)
 })
 
 /*
@@ -70,6 +79,7 @@ switchBtn.addEventListener('click', () => {
     convert(firstSelect.value, secondSelect.value, firstInput.value)
     console.log('Switch')
 })
+
 /*
 * This function switch between BASE_CODE and TARGET_CODE
 * Then call convert() function to update data */
@@ -86,6 +96,8 @@ function switchCode(bCode, tCode, bAmount) {
 * Then it create the option of select input using data that she
 * get since API.*/
 async function getCurrencySelects() {
+
+
     try {
         const response = await fetch('/api/symbols/')
 
@@ -95,15 +107,19 @@ async function getCurrencySelects() {
         const data = await response.json()
 
         data.currencies.forEach(currency => {
-            // Create first select options
-            const optionSource = document.createElement('option')
-            optionSource.value = currency.code
-            optionSource.textContent = `${currency.code} - ${currency.name}`
-            if (currency.code === 'USD') {
-                optionSource.selected = 'USD'
-            }
-            firstSelect.appendChild(optionSource)
+            monSelect.addOption(
+                {value: `${currency.code}`, text: `${currency.code} - ${currency.name}`}
+            )
 
+            // // Create first select options
+            // const optionSource = document.createElement('option')
+            // optionSource.value = currency.code
+            // optionSource.textContent = `${currency.code} - ${currency.name}`
+            // if (currency.code === 'USD') {
+            //     optionSource.selected = 'USD'
+            // }
+            // firstSelect.appendChild(optionSource)
+            //
             // Create second select options
             const optionTarget = document.createElement('option')
             optionTarget.value = currency.code
@@ -130,7 +146,7 @@ async function convert(BASE_CODE, TARGET_CODE, AMOUNT) {
     const target = TARGET_CODE
     const amount = AMOUNT
 
-    if (amount <=  0) {
+    if (amount <= 0) {
         showAlert('Veuillez entrez un montant valide')
     } else if (!source || !target) {
         showAlert('Veuillez choisir une devise source et une devise cible')

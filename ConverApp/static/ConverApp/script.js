@@ -23,6 +23,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Close the alert PopUp when the user click on the button
     alertBtn.addEventListener('click', hideAlert)
+
+    const container = document.querySelector('#container')
+    container.addEventListener('mouseenter', () => {
+        container.style.animationPlayState = 'paused'
+        container.style.boxShadow = 'none'
+    })
+    container.addEventListener('mouseleave', () => {
+        container.style.animationPlayState = 'running'
+        container.style.boxShadow = ''
+    })
+
 })
 
 function showAlert(message) {

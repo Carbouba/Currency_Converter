@@ -89,3 +89,5 @@ Ce projet est libre et ouvert aux contributions — suggestions de fonctionnalit
 📄 Licence
 
 Distribué sous licence MIT — voir le fichier [LICENSE](https://github.com/Carbouba/Currency_Converter/blob/main/LICENSE) pour plus de détails.
+
+

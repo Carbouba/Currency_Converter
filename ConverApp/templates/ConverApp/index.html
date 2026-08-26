@@ -7,6 +7,10 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Currency Converter</title>
+    <!-- Charge Tom Select -->
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.6.2/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.6.2/dist/js/tom-select.complete.min.js"></script>
+
     <!-- Charge DaisyUI v5 -->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
 
@@ -16,7 +20,19 @@
     <!-- Charge FontAwesome -->
     <script src="https://kit.fontawesome.com/d17de608c3.js" crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" href="{% static 'ConverApp/style.css' %}">
 </head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PLB48M9XT8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-PLB48M9XT8');
+</script>
+
 <body>
 <main class="page-content">
     <!-- Alert with buttons + responsive -->
@@ -33,6 +49,7 @@
     </div>
 
     <div id="container" class="bg-white border border-slate-200 rounded-[32px] p-8 max-w-2xl mx-auto space-y-6">
+
         <div class="meta-container">
             <h5 id="base-meta" class="text-slate-500 text-lg font-medium"></h5>
             <h1 id="target-meta" class="text-3xl font-extrabold text-slate-900 mt-1"></h1>
@@ -46,9 +63,11 @@
             <!-- ==================== LIGNE DU HAUT ==================== -->
 
             <!-- 1. Le menu déroulant de gauche (Source) -->
-            <select id="currency-first" class="select select-bordered bg-slate-50 border-slate-200 rounded-xl w-full">
-                <!-- Tes options d'API s'injecteront ici -->
-            </select>
+            <select id="currency-first" placeholder="Choisissez une devise source..." autocomplete="off">
+        </select>
+{#            <select id="currency-first" class="select select-bordered bg-slate-50 border-slate-200 rounded-xl w-full">#}
+{#                <!-- Tes options d'API s'injecteront ici -->#}
+{#            </select>#}
 
             <!-- 2. Le bouton central Switch (avec l'icône de flèches) -->
             <button id="switchBtn"
@@ -56,9 +75,11 @@
             </button>
 
             <!-- 3. Le menu déroulant de droite (Cible) -->
-            <select id="currency-second" class="select select-bordered bg-slate-50 border-slate-200 rounded-xl w-full">
-                <!-- Tes options d'API s'injecteront ici -->
-            </select>
+            <select id="currency-second" placeholder="Choisissez une devise cible..." autocomplete="off">
+        </select>
+{#            <select id="currency-second" class="select select-bordered bg-slate-50 border-slate-200 rounded-xl w-full">#}
+{#                <!-- Tes options d'API s'injecteront ici -->#}
+{#            </select>#}
 
             <!-- ==================== LIGNE DU BAS ==================== -->
 
@@ -83,7 +104,8 @@
         <a href="https://github.com/Carbouba" target="_blank" rel="noopener noreferrer">Carbouba</a>
         &mdash; Currency Converter. Tous droits r&eacute;serv&eacute;s.
     </p>
-    <a href="https://github.com/Carbouba/Currency_Converter.git" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+    <a href="https://github.com/Carbouba/Currency_Converter.git" target="_blank"><i class="fa-brands fa-github"></i>
+        GitHub</a>
 </footer>
 
 

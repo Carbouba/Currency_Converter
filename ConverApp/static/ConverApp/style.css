@@ -216,10 +216,13 @@ body {
     min-width: 0;
 }
 
-/* Selects : pilule plate, chevron custom, styles natifs neutralisés */
-select {
-    appearance: none;
-    -webkit-appearance: none;
+/* ---------- Tom Select — habillage aux couleurs de l'app ---------- */
+
+.ts-wrapper {
+    width: 100%;
+}
+
+.ts-wrapper .ts-control {
     width: 100%;
     padding: 12px 36px 12px 14px;
     border-radius: var(--radius-field);
@@ -228,62 +231,75 @@ select {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B7280' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 14px center;
+    font-family: inherit;
     font-size: 14px;
     font-weight: 600;
     color: var(--ink);
+    box-shadow: none;
     cursor: pointer;
     transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-select:hover {
+.ts-wrapper .ts-control:hover {
     background-color: var(--surface-hover);
 }
 
-select:focus-visible {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-soft);
-}
-
-/* Champs de montant */
-input[type='number'] {
-    width: 100%;
-    padding: 12px 14px;
-    border-radius: var(--radius-field);
-    border: 1px solid transparent;
-    background-color: var(--surface);
-    font-size: 16px;
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-    color: var(--ink);
-    transition: background-color 0.15s ease, border-color 0.15s ease;
-}
-
-input[type='number']:hover:not(:disabled) {
-    background-color: var(--surface-hover);
-}
-
-input[type='number']:focus-visible {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-soft);
+.ts-wrapper.focus .ts-control,
+.ts-wrapper.dropdown-active .ts-control {
     background-color: var(--card);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
-input[type='number']:disabled {
+/* La valeur actuellement sélectionnée, affichée dans le champ */
+.ts-wrapper .ts-control > .item {
+    color: var(--ink);
+    font-weight: 600;
+    background: transparent;
+}
+
+/* Le champ de recherche texte interne (tapé par l'utilisateur) */
+.ts-wrapper .ts-control > input {
+    color: var(--ink);
+    font-weight: 600;
+}
+
+.ts-wrapper .ts-control > input::placeholder {
     color: var(--muted);
-    cursor: default;
+    font-weight: 500;
 }
 
-/* Masque les flèches natives du input number pour un champ épuré */
-input[type='number']::-webkit-outer-spin-button,
-input[type='number']::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+/* La liste déroulante */
+.ts-dropdown {
+    margin-top: 6px;
+    padding: 6px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: 0 12px 28px -12px rgba(16, 24, 32, 0.25);
+    font-family: inherit;
 }
 
-input[type='number'] {
-    -moz-appearance: textfield;
+.ts-dropdown .ts-dropdown-content {
+    padding: 0;
+}
+
+.ts-dropdown .option {
+    padding: 9px 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+}
+
+.ts-dropdown .option.active {
+    background: var(--accent-soft);
+    color: var(--ink);
+}
+
+.ts-dropdown .option[data-selected] {
+    font-weight: 700;
+    color: var(--accent-dark);
 }
 
 /* ---------- Bouton d'inversion — la signature ---------- */

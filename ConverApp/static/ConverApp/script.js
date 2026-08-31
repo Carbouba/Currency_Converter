@@ -35,10 +35,13 @@ const secondSelect = new TomSelect('#currency-second', {
 * Attempt to load all the DOM content*/
 document.addEventListener('DOMContentLoaded', () => {
 
-    if (isLimitReached()) {
-        lockInterface()
-        showLimitAlert()
-    }
+    showLimitAlert()
+    lockInterface()
+
+    // if (isLimitReached()) {
+    //     lockInterface()
+    //     showLimitAlert()
+    // }
 
     // Get all currencies code and symboles
     getCurrencySelects()
@@ -59,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 })
-
 
 function showAlert(message) {
     document.querySelector('#alert-message').textContent = message
@@ -171,7 +173,8 @@ function lockInterface() {
 }
 
 function showLimitAlert(){
-    document.querySelector('#alert-message').textContent = `Limite quotidienne atteinte (${DAILY_LIMIT} conversions). Réessaie demain.`
+    // document.querySelector('#alert-message').textContent = `Limite quotidienne atteinte (${DAILY_LIMIT} conversions). Réessaie demain.`
+    document.querySelector('#alert-message').innerHTML = `Erreur server interne. Impossible de convertir.<br> Réessaie demain.<br>`
     clearTimeout(alertTimeout)
     alertDiv.hidden = false
 }

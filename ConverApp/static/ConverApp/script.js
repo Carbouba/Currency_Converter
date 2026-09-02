@@ -200,7 +200,7 @@ async function convert(BASE_CODE, TARGET_CODE, AMOUNT) {
             if (response.ok) {
                 const data = await response.json()
                 console.log(data.conversion.toFixed(2))
-                secondInput.value = `${data.conversion.toFixed(2)}`
+                secondInput.value = `${data.conversion.toFixed(2)} ${data.target}`
                 baseMeta.innerHTML = `${data.amount} ${data.source} = `
                 targetMeta.innerHTML = `${data.conversion.toFixed(2)} ${data.target}`
                 exchangeRate.innerHTML = `Taux de change : 1 ${data.source} = ${data.rate} ${data.target}`

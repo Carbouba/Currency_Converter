@@ -35,14 +35,6 @@ const secondSelect = new TomSelect('#currency-second', {
 * Attempt to load all the DOM content*/
 document.addEventListener('DOMContentLoaded', () => {
 
-    showLimitAlert()
-    lockInterface()
-
-    // if (isLimitReached()) {
-    //     lockInterface()
-    //     showLimitAlert()
-    // }
-
     // Get all currencies code and symboles
     getCurrencySelects()
 
@@ -139,57 +131,53 @@ async function getCurrencySelects() {
     }
 }
 
-const DAILY_LIMIT = 5
-const USAGE_KEY = 'conversion-usage'
-
-function getUsage() {
-    const stored = JSON.parse(localStorage.getItem(USAGE_KEY) || 'null')
-    const today = new Date().toDateString()
-
-    // Nouveau jour (ou première visite) → on repart de zéro
-    if (!stored || stored.date !== today) {
-        return {date: today, count: 0}
-    }
-    return stored
-}
-
-function incrementUsage() {
-    const usage = getUsage()
-    usage.count += 1
-    localStorage.setItem(USAGE_KEY, JSON.stringify(usage))
-    return usage.count
-}
-
-function isLimitReached() {
-    return getUsage().count >= DAILY_LIMIT
-}
-
-function lockInterface() {
-    firstInput.disabled = true
-    secondInput.disabled = true
-    switchBtn.disabled = true
-    firstSelect.disable()   // API Tom Select
-    secondSelect.disable()  // API Tom Select
-}
-
-function showLimitAlert(){
-    // document.querySelector('#alert-message').textContent = `Limite quotidienne atteinte (${DAILY_LIMIT} conversions). Réessaie demain.`
-    document.querySelector('#alert-message').innerHTML = `Erreur server interne. Impossible de convertir.<br> Réessaie demain.<br>`
-    clearTimeout(alertTimeout)
-    alertDiv.hidden = false
-}
+//////////////////////////////// OLD VERSION TO LIMITE API USAGE ////////////////////////////////////////////////////////////
+// const DAILY_LIMIT = 5
+// const USAGE_KEY = 'conversion-usage'
+//
+// function getUsage() {
+//     const stored = JSON.parse(localStorage.getItem(USAGE_KEY) || 'null')
+//     const today = new Date().toDateString()
+//
+//     // Nouveau jour (ou première visite) → on repart de zéro
+//     if (!stored || stored.date !== today) {
+//         return {date: today, count: 0}
+//     }
+//     return stored
+// }
+//
+// function incrementUsage() {
+//     const usage = getUsage()
+//     usage.count += 1
+//     localStorage.setItem(USAGE_KEY, JSON.stringify(usage))
+//     return usage.count
+// }
+//
+// function isLimitReached() {
+//     return getUsage().count >= DAILY_LIMIT
+// }
+//
+// function lockInterface() {
+//     firstInput.disabled = true
+//     secondInput.disabled = true
+//     switchBtn.disabled = true
+//     firstSelect.disable()   // API Tom Select
+//     secondSelect.disable()  // API Tom Select
+// }
+//
+// function showLimitAlert() {
+//     // document.querySelector('#alert-message').textContent = `Limite quotidienne atteinte (${DAILY_LIMIT} conversions). Réessaie demain.`
+//     document.querySelector('#alert-message').innerHTML = `Erreur server interne. Impossible de convertir.<br> Réessaie demain.<br>`
+//     clearTimeout(alertTimeout)
+//     alertDiv.hidden = false
+// }
+//////////////////////////////// OLD VERSION TO LIMITE API USAGE ////////////////////////////////////////////////////////////
 
 /*
 * THIS FUNCTION TAKE THREE PARAMETERS (BASE_CODE, TARGET_CODE AND AMOUNT)
 * The function fetch the API url, and get the data from Django server.
 * Then it update the interface without refresh or reload the page.*/
 async function convert(BASE_CODE, TARGET_CODE, AMOUNT) {
-
-    if (isLimitReached()) {
-        lockInterface()
-        showLimitAlert()
-        return
-    }
 
     const source = BASE_CODE
     const target = TARGET_CODE
@@ -206,30 +194,28 @@ async function convert(BASE_CODE, TARGET_CODE, AMOUNT) {
         try {
             const response = await fetch(`/api/convert/?${params}`)
 
-            incrementUsage()
-            if (isLimitReached()) {
-                lockInterface()
-                showLimitAlert()
-            }
-
             if (!response.ok) {
                 throw new Error(response.status)
             }
-            const data = await response.json()
-            secondInput.value = data.to.amount
-            baseMeta.innerHTML = `${data.from.amount} ${data.from.currency} = `
-            targetMeta.innerHTML = `${data.to.amount} ${data.to.currency}`
-            exchangeRate.innerHTML = `Taux de change : 1 ${data.from.currency} = ${data.rate} ${data.to.currency}`
-            updateAt.innerHTML = `Dernier mise a jour le : ${today.toLocaleDateString('fr-FR', {
-                day: '2-digit',
-                month: 'long',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            })}`
+            if (response.ok) {
+                const data = await response.json()
+                console.log(data.conversion.toFixed(2))
+                secondInput.value = `${data.conversion.toFixed(2)}`
+                baseMeta.innerHTML = `${data.amount} ${data.source} = `
+                targetMeta.innerHTML = `${data.conversion.toFixed(2)} ${data.target}`
+                exchangeRate.innerHTML = `Taux de change : 1 ${data.source} = ${data.rate} ${data.target}`
+                updateAt.innerHTML = `Dernier mise a jour le : ${data.date}`
+                // updateAt.innerHTML = `Dernier mise a jour le : ${today.toLocaleDateString('fr-FR', {
+                //     day: '2-digit',
+                //     month: 'long',
+                //     year: 'numeric',
+                //     hour: '2-digit',
+                //     minute: '2-digit'
+                // })}`
 
+                console.log(data)
+            }
 
-            console.log(data)
         } catch (error) {
             showAlert('Erreur : impossible de convertir. Réessaie plus tard.')
             console.error(`Erreur : ${error}`)

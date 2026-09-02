@@ -6,11 +6,11 @@ import requests
 from decouple import config
 from django.views.decorators.http import require_GET
 
-api_key = config('API_KEY')
-headers = {
-    "Authorization": f"Bearer {api_key}"
-}
-url = 'https://allratestoday.com/api/v1/rates'
+# api_key = config('API_KEY')
+# headers = {
+#     "Authorization": f"Bearer {api_key}"
+# }
+# url = 'https://allratestoday.com/api/v1/rates'
 get_symbole_urls = 'https://allratestoday.com/api/v1/symbols'
 
 
@@ -33,20 +33,26 @@ def convert_currency(request):
     if not source or not target:
         return JsonResponse({'error': 'source et target requis'}, status=400)
 
-    params = {
-        "source": source,
-        "target": target,
-        "amount": amount,
-    }
-
     try:
-        response = requests.get(url=url, params=params,
-                                headers=headers, timeout=5)
+        response = requests.get(url=f"https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/{source.lower()}.json", timeout=5)
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
         return JsonResponse({'error': 'Erreur API externe'}, status=502)
 
-    return JsonResponse(response.json())
+    data = response.json()
+    rate = data[source.lower()][target.lower()]
+    conversion_result = float(amount) * float(rate)
+    date = data['date']
+    result = {
+        'date': date,
+        'source': source,
+        'target': target,
+        'amount': amount,
+        'conversion': conversion_result,
+        'rate': rate,
+    }
+
+    return JsonResponse(result, safe=False)
 
 @require_GET
 def get_symbols(request):

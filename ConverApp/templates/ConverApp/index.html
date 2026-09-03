@@ -6,7 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Currency Converter</title>
+    <title>Ultimate Converter</title>
     <!-- Charge Tom Select -->
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.6.2/dist/css/tom-select.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.6.2/dist/js/tom-select.complete.min.js"></script>
@@ -26,14 +26,19 @@
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLB48M9XT8"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    window.dataLayer = window.dataLayer || [];
 
-  gtag('config', 'G-PLB48M9XT8');
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PLB48M9XT8');
 </script>
 
 <body>
+
 <main class="page-content">
     <!-- Alert with buttons + responsive -->
     <div role="alert" class="alert alert-vertical sm:alert-horizontal" id="alert-div">
@@ -44,65 +49,98 @@
         </svg>
         <span id="alert-message"></span>
         <div>
-{#            <button id="alert-btn" class="btn btn-sm btn-error">Close</button>#}
+            {#            <button id="alert-btn" class="btn btn-sm btn-error">Close</button>#}
         </div>
+    </div>
+
+    <div id="action-btn">
+        <button class="action-btn btn" data-page="currency-converter-page" id="CCP">Convertisseur de devise</button>
+        <button class="action-btn btn" data-page="units-converter-page" id="UC">Convertisseur de distance</button>
     </div>
 
     <div id="container" class="bg-white border border-slate-200 rounded-[32px] p-8 max-w-2xl mx-auto space-y-6">
 
-        <div class="meta-container">
-            <h5 id="base-meta" class="text-slate-500 text-lg font-medium"></h5>
-            <h1 id="target-meta" class="text-3xl font-extrabold text-slate-900 mt-1"></h1>
-            <p id="exchange-rate"></p>
-            <p id="update-at" class="text-xs text-slate-400 mt-2 block"></p>
-        </div>
+        <section id="currency-converter-page" class="page">
+            <div class="meta-container">
+                <h5 id="base-meta" class="text-slate-500 text-lg font-medium"></h5>
+                <h1 id="target-meta" class="text-3xl font-extrabold text-slate-900 mt-1"></h1>
+                <p id="exchange-rate"></p>
+                <p id="update-at" class="text-xs text-slate-400 mt-2 block"></p>
+            </div>
 
-        <!-- Le conteneur principal en grille à 3 colonnes -->
-        <div id="currency-container" class="grid grid-cols-[1fr_auto_1fr] gap-x-6 gap-y-4 items-center">
+            <!-- Le conteneur principal en grille à 3 colonnes -->
+            <div id="currency-container" class="grid grid-cols-[1fr_auto_1fr] gap-x-6 gap-y-4 items-center">
 
-            <!-- ==================== LIGNE DU HAUT ==================== -->
+                <!-- ==================== LIGNE DU HAUT ==================== -->
 
+                <!-- 1. Le menu déroulant de gauche (Source) -->
+                <select id="currency-first" placeholder="Choisissez une devise source..." autocomplete="off">
+                </select>
+                {#            <select id="currency-first" class="select select-bordered bg-slate-50 border-slate-200 rounded-xl w-full">#}
+                {#                <!-- Tes options d'API s'injecteront ici -->#}
+                {#            </select>#}
+
+                <!-- 2. Le bouton central Switch (avec l'icône de flèches) -->
+                <button id="switchBtn"
+                        class="btn btn-circle btn-sm btn-ghost hover:bg-slate-100 border border-slate-200 text-lg">⇆
+                </button>
+
+                <!-- 3. Le menu déroulant de droite (Cible) -->
+                <select id="currency-second" placeholder="Choisissez une devise cible..." autocomplete="off">
+                </select>
+                {#            <select id="currency-second" class="select select-bordered bg-slate-50 border-slate-200 rounded-xl w-full">#}
+                {#                <!-- Tes options d'API s'injecteront ici -->#}
+                {#            </select>#}
+
+                <!-- ==================== LIGNE DU BAS ==================== -->
+
+                <!-- 4. La saisie de montant de gauche (Source) -->
+                <input type="number" id="first-input"
+                       class="input input-bordered bg-slate-50 border-slate-200 rounded-xl w-full"
+                       placeholder="Entrez le montant" autofocus>
+
+                <!-- 5. L'ESPACEUR VIDE CENTRAL (Obligatoire pour que la grille reste alignée !) -->
+                <span class="justify-self-center text-lg font-semibold text-slate-400" aria-hidden="true">=</span>
+
+                <!-- 6. L'affichage du montant converti de droite (Cible - Désactivé) -->
+                <input type="text" id="second-input"
+                       class="input input-bordered bg-slate-50 border-slate-200 rounded-xl w-full" disabled>
+
+            </div>
+        </section>
+
+        <section id="units-converter-page" class="page">
+            <h1>Units Converter</h1>
             <!-- 1. Le menu déroulant de gauche (Source) -->
-            <select id="currency-first" placeholder="Choisissez une devise source..." autocomplete="off">
-        </select>
-{#            <select id="currency-first" class="select select-bordered bg-slate-50 border-slate-200 rounded-xl w-full">#}
-{#                <!-- Tes options d'API s'injecteront ici -->#}
-{#            </select>#}
+            <select id="unit-first" placeholder="Choisissez l'unité source..." autocomplete="off">
+            </select>
 
             <!-- 2. Le bouton central Switch (avec l'icône de flèches) -->
-            <button id="switchBtn"
+            <button id="switchUnitBtn"
                     class="btn btn-circle btn-sm btn-ghost hover:bg-slate-100 border border-slate-200 text-lg">⇆
             </button>
 
             <!-- 3. Le menu déroulant de droite (Cible) -->
-            <select id="currency-second" placeholder="Choisissez une devise cible..." autocomplete="off">
-        </select>
-{#            <select id="currency-second" class="select select-bordered bg-slate-50 border-slate-200 rounded-xl w-full">#}
-{#                <!-- Tes options d'API s'injecteront ici -->#}
-{#            </select>#}
-
-            <!-- ==================== LIGNE DU BAS ==================== -->
+            <select id="unit-second" placeholder="Choisissez l'unité cible..." autocomplete="off">
+            </select>
 
             <!-- 4. La saisie de montant de gauche (Source) -->
-            <input type="number" id="first-input"
-                   class="input input-bordered bg-slate-50 border-slate-200 rounded-xl w-full" placeholder="Entrez le montant" autofocus>
+                <input type="number" id="unit-input"
+                       class="input input-bordered bg-slate-50 border-slate-200 rounded-xl w-full"
+                       placeholder="Entrez le montant" autofocus>
 
-            <!-- 5. L'ESPACEUR VIDE CENTRAL (Obligatoire pour que la grille reste alignée !) -->
-            <span class="justify-self-center text-lg font-semibold text-slate-400" aria-hidden="true">=</span>
+            <h3 id="result-meta" class="text-1xl font-bold text-slate-600 mt-1"></h3>
+        </section>
 
-            <!-- 6. L'affichage du montant converti de droite (Cible - Désactivé) -->
-            <input type="text" id="second-input"
-                   class="input input-bordered bg-slate-50 border-slate-200 rounded-xl w-full" disabled>
-
-        </div>
     </div>
 </main>
+
 
 <footer class="site-footer" aria-label="Informations de copyright">
     <p>
         &copy; {% now "Y" %}
         <a href="https://github.com/Carbouba" target="_blank" rel="noopener noreferrer">Carbouba</a>
-        &mdash; Currency Converter. Tous droits r&eacute;serv&eacute;s.
+        &mdash; Ultimate Converter.
     </p>
     <a href="https://github.com/Carbouba/Currency_Converter.git" target="_blank"><i class="fa-brands fa-github"></i>
         GitHub</a>

@@ -35,11 +35,18 @@ const secondSelect = new TomSelect('#currency-second', {
 * Attempt to load all the DOM content*/
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Capture the two pagination buttons
+    document.querySelectorAll('.action-btn').forEach(btn => {
+        btn.onclick = () => {
+            showPage(btn.dataset.page)
+        }
+    })
+
     // Get all currencies code and symboles
     getCurrencySelects()
 
     // Close the alert PopUp when the user click on the button
-    alertBtn.addEventListener('click', hideAlert)
+    // alertBtn.addEventListener('click', hideAlert)
 
     //     Manage the main container animation state
     const container = document.querySelector('#container')
@@ -52,8 +59,19 @@ document.addEventListener('DOMContentLoaded', () => {
         container.style.boxShadow = ''
     })
 
+//     Load currency convert page by default
+    showPage('currency-converter-page')
 
 })
+
+function showPage(page) {
+    console.log(page)
+    document.querySelectorAll('.page').forEach((page) => {
+        page.style.display = 'none'
+    })
+    document.querySelector(`#${page}`).style.display = 'block'
+
+}
 
 function showAlert(message) {
     document.querySelector('#alert-message').textContent = message
@@ -79,7 +97,7 @@ firstInput.addEventListener('input', () => {
 * Attempt to an EventListener when user click on the
 switchBtn and call switchCode function*/
 switchBtn.addEventListener('click', () => {
-    switchCode(firstSelect.getValue(), secondSelect.getValue(), firstInput.value)
+    switchCode()
     convert(firstSelect.getValue(), secondSelect.getValue(), firstInput.value)
     console.log('Switch')
 })
@@ -221,4 +239,104 @@ async function convert(BASE_CODE, TARGET_CODE, AMOUNT) {
             console.error(`Erreur : ${error}`)
         }
     }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+// UNITS CONVERT LOGIC
+UnitsCoeff = {
+    'm': 1,
+    'cm': 0.01,
+    'mm': 0.001
+}
+
+const unitInput = document.querySelector('#unit-input')
+
+// Initialize Tom Select
+const firstUnitSelect = new TomSelect('#unit-first', {
+    create: false, // disable user typing creation for this example
+    closeAfterSelect: true,
+    onChange: function (value) {
+        // Get the coefficients units
+        units_convert(unitInput.value, UnitsCoeff[firstUnitSelect.getValue()], UnitsCoeff[secondUnitSelect.getValue()])
+
+    }
+});
+const secondUnitSelect = new TomSelect('#unit-second', {
+    create: false, // disable user typing creation for this example
+    closeAfterSelect: true,
+    onChange: function (value) {
+        // Get the coefficients units
+        units_convert(unitInput.value, UnitsCoeff[firstUnitSelect.getValue()], UnitsCoeff[secondUnitSelect.getValue()])
+
+    }
+});
+
+unitInput.addEventListener('input', () => {
+    units_convert(unitInput.value, UnitsCoeff[firstUnitSelect.getValue()], UnitsCoeff[secondUnitSelect.getValue()])
+})
+
+/*
+* Attempt to an EventListener when user click on the
+switchBtn and call switchCode function*/
+document.querySelector('#switchUnitBtn').addEventListener('click', () => {
+    switchUnitCode()
+    console.log('Switch')
+})
+
+/*
+* This function switch between BASE_CODE and TARGET_CODE
+* Then call convert() function to update data */
+function switchUnitCode() {
+    const bUnit = firstUnitSelect.getValue()
+    const tUnit = secondUnitSelect.getValue()
+
+
+    firstUnitSelect.setValue(tUnit, true)
+    secondUnitSelect.setValue(bUnit, true)
+
+    units_convert(unitInput.value, UnitsCoeff[firstUnitSelect.getValue()], UnitsCoeff[secondUnitSelect.getValue()])
+
+}
+
+const unitsOptions = [
+    {value: 'm', text: 'Mètre'},
+    {value: 'cm', text: 'Centimètre'},
+    {value: 'mm', text: 'Millimètre'}
+];
+
+// Create first select options
+unitsOptions.forEach(unit => {
+    firstUnitSelect.addOption(
+        {value: unit.value, text: unit.text},
+    )
+})
+
+// Create second select options
+unitsOptions.forEach(unit => {
+    secondUnitSelect.addOption(
+        {value: unit.value, text: unit.text},
+    )
+})
+
+
+console.log(UnitsCoeff.cm)
+
+
+function units_convert(AMOUNT, BASE_COEFF, TARGET_COEFF) {
+
+    if (AMOUNT <= 0 || !AMOUNT) {
+        showAlert('Veuillez entrez un montant valide')
+        return
+    } else if (!BASE_COEFF || !TARGET_COEFF) {
+        showAlert('Veuillez choisir une devise source et une devise cible')
+        return
+    }
+
+    const meterValue = AMOUNT * BASE_COEFF
+    const convertResult = meterValue / TARGET_COEFF
+    // On arrondit à 4 chiffres après la virgule maximum [1]
+    const resultatArrondi = parseFloat(convertResult.toFixed(4));
+
+    console.log(resultatArrondi)
+    document.querySelector('#result-meta').innerHTML = `${AMOUNT} ${firstUnitSelect.options[firstUnitSelect.getValue()].text} =  ${resultatArrondi} ${secondUnitSelect.options[secondUnitSelect.getValue()].text}`
 }

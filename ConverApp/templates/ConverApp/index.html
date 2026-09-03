@@ -53,9 +53,21 @@
         </div>
     </div>
 
-    <div id="action-btn">
-        <button class="action-btn btn" data-page="currency-converter-page" id="CCP">Convertisseur de devise</button>
-        <button class="action-btn btn" data-page="units-converter-page" id="UC">Convertisseur de distance</button>
+    <!-- On centre les boutons et on leur donne de l'espace par rapport à la carte -->
+    <div id="action-btn" class="flex justify-center gap-3 mb-6 max-w-2xl mx-auto px-4">
+
+        <!-- Bouton Convertisseur de Devises -->
+        <button class="action-btn btn rounded-full border border-slate-200 bg-white hover:bg-slate-100 text-slate-700 font-semibold px-6 shadow-sm"
+                data-page="currency-converter-page" id="CCP">
+            Convertisseur de devise
+        </button>
+
+        <!-- Bouton Convertisseur de Distances -->
+        <button class="action-btn btn rounded-full border border-slate-200 bg-white hover:bg-slate-100 text-slate-700 font-semibold px-6 shadow-sm"
+                data-page="units-converter-page" id="UC">
+            Convertisseur de distance
+        </button>
+
     </div>
 
     <div id="container" class="bg-white border border-slate-200 rounded-[32px] p-8 max-w-2xl mx-auto space-y-6">
@@ -109,27 +121,40 @@
             </div>
         </section>
 
-        <section id="units-converter-page" class="page">
-            <h1>Units Converter</h1>
-            <!-- 1. Le menu déroulant de gauche (Source) -->
-            <select id="unit-first" placeholder="Choisissez l'unité source..." autocomplete="off">
-            </select>
+        <section id="units-converter-page" class="page space-y-6">
 
-            <!-- 2. Le bouton central Switch (avec l'icône de flèches) -->
-            <button id="switchUnitBtn"
-                    class="btn btn-circle btn-sm btn-ghost hover:bg-slate-100 border border-slate-200 text-lg">⇆
-            </button>
+            <!-- 1. SECTION SUPÉRIEURE : Grille à 3 colonnes pour les sélecteurs et le bouton central -->
+            <div class="grid grid-cols-[1fr_auto_1fr] gap-x-6 gap-y-4 items-center">
 
-            <!-- 3. Le menu déroulant de droite (Cible) -->
-            <select id="unit-second" placeholder="Choisissez l'unité cible..." autocomplete="off">
-            </select>
+                <!-- Sélecteur d'unité de gauche (Source) -->
+                <select id="unit-first" placeholder="Choisissez l'unité source..." autocomplete="off">
+                </select>
 
-            <!-- 4. La saisie de montant de gauche (Source) -->
+                <!-- Bouton central de permutation (Switch) -->
+                <button id="switchUnitBtn"
+                        class="btn btn-circle btn-sm btn-ghost hover:bg-slate-100 border border-slate-200 text-lg">
+                    ⇆
+                </button>
+
+                <!-- Sélecteur d'unité de droite (Cible) -->
+                <select id="unit-second" placeholder="Choisissez l'unité cible..." autocomplete="off">
+                </select>
+
+            </div>
+
+            <!-- 2. SECTION DU MILIEU : Le champ de saisie en PLEINE LARGEUR -->
+            <div class="w-full">
                 <input type="number" id="unit-input"
-                       class="input input-bordered bg-slate-50 border-slate-200 rounded-xl w-full"
-                       placeholder="Entrez le montant" autofocus>
+                       class="input input-bordered bg-slate-50 border-slate-200 rounded-xl w-full py-4 text-lg text-center"
+                       placeholder="Entrez la valeur à convertir" autofocus>
+            </div>
 
-            <h3 id="result-meta" class="text-1xl font-bold text-slate-600 mt-1"></h3>
+            <!-- 3. SECTION INFÉRIEURE : L'affichage du résultat bien mis en valeur -->
+            <div class="text-center pt-4 border-t border-slate-100">
+                <h3 id="result-meta" class="text-2xl font-extrabold text-slate-800 tracking-tight">
+                </h3>
+            </div>
+
         </section>
 
     </div>

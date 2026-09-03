@@ -39,6 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.action-btn').forEach(btn => {
         btn.onclick = () => {
             showPage(btn.dataset.page)
+            switchPageBtn(btn.dataset.page)
+
         }
     })
 
@@ -61,8 +63,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //     Load currency convert page by default
     showPage('currency-converter-page')
+    switchPageBtn('currency-converter-page')
 
 })
+
+function switchPageBtn(page) {
+
+    document.querySelectorAll('.action-btn').forEach(btn => {
+        btn.classList.toggle('active-page-tab', btn.dataset.page === page)
+    })
+
+}
 
 function showPage(page) {
     console.log(page)
@@ -70,6 +81,7 @@ function showPage(page) {
         page.style.display = 'none'
     })
     document.querySelector(`#${page}`).style.display = 'block'
+
 
 }
 

@@ -132,6 +132,26 @@ body {
     animation-iteration-count: infinite;
 
 }
+
+
+/* ----------- Animation de section lors de la pagination ----------*/
+/* État de base */
+.page {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .5s ease, visibility .15s ease;
+}
+
+/* Section affichée */
+.page.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Optionnel: empêche les clics pendant la transition */
+.page.is-transitioning {
+  pointer-events: none;
+}
 /* ---------- Bloc Résultat Textes ---------- */
 .meta-container {
     margin-bottom: 28px;

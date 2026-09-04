@@ -67,6 +67,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
 })
 
+/*
+* Animation de section lors de la pagination*/
+const buttons = document.querySelectorAll(".action-btn");
+const pages = document.querySelectorAll(".page");
+let currentPage = document.querySelector(".page.is-active") || pages[0];
+let isAnimating = false;
+
+if (!currentPage.classList.contains("is-active")) {
+  currentPage.classList.add("is-active");
+}
+
+function goToPage(targetId) {
+  if (isAnimating) return;
+  const nextPage = document.getElementById(targetId);
+  if (!nextPage || nextPage === currentPage) return;
+
+  isAnimating = true;
+  currentPage.classList.add("is-transitioning");
+  currentPage.classList.remove("is-active"); // fade-out
+
+  setTimeout(() => {
+    currentPage.classList.remove("is-transitioning");
+    nextPage.classList.add("is-active"); // fade-in
+    currentPage = nextPage;
+    isAnimating = false;
+  }, 250); // même durée que le CSS
+}
+
+buttons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const targetId = btn.dataset.page; // ex: "currency-converter-page"
+    goToPage(targetId);
+
+    // Mettre le bouton actif (couleur)
+    buttons.forEach(b => b.classList.remove("active-page-tab"));
+    btn.classList.add("active-page-tab");
+  });
+});
+
 function switchPageBtn(page) {
 
     document.querySelectorAll('.action-btn').forEach(btn => {
@@ -340,7 +379,7 @@ function units_convert(AMOUNT, BASE_COEFF, TARGET_COEFF) {
         showAlert('Veuillez entrez un montant valide')
         return
     } else if (!BASE_COEFF || !TARGET_COEFF) {
-        showAlert('Veuillez choisir une devise source et une devise cible')
+        showAlert('Veuillez choisir une unité source et une unité cible')
         return
     }
 

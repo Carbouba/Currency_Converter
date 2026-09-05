@@ -298,6 +298,7 @@ p {
     border-radius: var(--ch-radius-card);
     padding: 32px;
     box-shadow: var(--ch-shadow-card);
+    transition: .3s;
 }
 
 .ch-card-sm {
@@ -544,12 +545,18 @@ p {
 .action-btn:hover {
     transform: translateX(10px);
 }
+aside span i {
+        color: var(--ch-accent);
+    }
 
 .action-btn.active-page-tab {
+    aside span i {
+        color: var(--ch-ink);
+    }
     background: var(--ch-accent-soft);
     color: var(--ch-accent);
     font-weight: 700;
-    box-shadow: 0 4px 10px rgba(30, 142, 90, 0.12);
+    /*box-shadow: 0 4px 10px rgba(30, 142, 90, 0.12);*/
     transform: translateX(10px);
 }
 
@@ -578,6 +585,13 @@ p {
     align-items: center;
     gap: 16px;
     margin: 4px 0;
+}
+.ch-divider-footer {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    height: 1px;
+    background: var(--ch-line);
 }
 
 .ch-divider::before,
@@ -617,19 +631,21 @@ p {
 /* ─── Footer ─────────────────────────────────────────────────────────────── */
 
 .ch-footer {
-    margin-top: 32px;
+    padding-top: 32px;
+    padding-bottom: 16px;
     text-align: center;
-    font-size: 0.78rem;
+    font-size: 0.90rem;
     color: var(--ch-muted-soft);
 
 }
 footer, .ch-footer {
-  background: transparent; /* Il épouse automatiquement la couleur de la page ! */
+  background: #f0fdf4; /* Il épouse automatiquement la couleur de la page ! */
 }
 .ch-footer a {
     color: var(--ch-accent);
     text-decoration: none;
     font-weight: 600;
+
 }
 
 .ch-footer a:hover {

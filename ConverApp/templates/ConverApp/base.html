@@ -33,20 +33,15 @@
     gtag('config', 'G-PLB48M9XT8');
 </script>
 
-<body class="min-h-screen text-slate-800">
+<body class="">
 {% block body %}
 {% endblock %}
 
 
-<footer class="ch-footer" aria-label="Informations de copyright">
-    <p>
-        &copy; {% now "Y" %}
-        <a href="https://github.com/Carbouba" target="_blank" rel="noopener noreferrer">Carbouba</a>
-        &mdash; ConverHub.
-    </p>
-    <a href="https://github.com/Carbouba/Currency_Converter.git" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
-</footer>
 
+
+{% block footer %}
+{% endblock %}
 
 {% block script %}
 {% endblock %}

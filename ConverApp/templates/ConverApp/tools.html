@@ -1,0 +1,153 @@
+{% extends 'ConverApp/base.html' %}
+{% load static %}
+
+{% block title %}ConverHub | Tools{% endblock %}
+
+{% block body %}
+    <input type="hidden" value="{{ tool }}" id="select-tool">
+<!-- L'App Shell global à deux colonnes -->
+<div class="ch-app-shell">
+
+    <!-- ==================== COLONNE GAUCHE : LA SIDEBAR ==================== -->
+    <aside class="ch-sidebar">
+
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 24px; padding-left: 10px;">
+            <a href="{% url "home" %}"><img src="{% static 'ConverApp/Brand images/logo-dark.png' %}" alt="Logo" style="height: 36px; width: auto;"></a>
+        </div>
+
+        <!-- CATEGORIE : FINANCE -->
+        <div class="ch-nav-category ">Finance</div>
+        <button class="ch-nav-item action-btn" data-page="currency-converter-page" id="CCP">
+            <span ><i class="fa-solid fa-money-bill-transfer" style="color: rgb(30, 142, 90);"></i></span> Devise
+        </button>
+
+        <div class="ch-nav-category">Mesures</div>
+
+        <!-- Onglet Distance (Bouton d'action connecté au JS de pagination) -->
+        <button class="ch-nav-item action-btn" data-page="units-converter-page" id="UC">
+            <span><i class="fa-solid fa-ruler" style="color: rgb(30, 142, 90);"></i></span> Distance
+        </button>
+
+        <div class="ch-nav-category">Temps</div><span class="ch-badge ch-badge-muted" style="margin-left: auto; font-size: 0.6rem;">BIENTÔT</span>
+
+        <div class="ch-nav-category">Santé</div><span class="ch-badge ch-badge-muted" style="margin-left: auto; font-size: 0.6rem;">BIENTÔT</span>
+
+        <!-- Copyright discret de bas de page -->
+        <div style="margin-top: auto; padding: 10px; font-size: 0.72rem; color: var(--ch-muted-soft);">
+            &copy; 2026 ConverHub
+        </div>
+
+    </aside>
+
+
+    <main class="ch-main">
+        <div id="alert-div" class="custom-alert" role="alert">
+            <span class="ch-alert-icon">⚠️</span>
+        <span id="alert-message"></span>
+    </div>
+
+        <div id="container" class="ch-card ch-animate-in" style="max-width: 480px; margin: 0 auto;">
+
+            <!-- ==================== SECTION A : CONVERTISSEUR DE DEVISES ==================== -->
+            <section id="currency-converter-page" class="page">
+                <!-- En-tête de section -->
+                <div class="meta-container" style="margin-bottom: 28px;">
+                    <h5 style="margin: 0; font-size: 14px; color: var(--ch-muted);">Conversion de devises</h5>
+                    <h1 id="result-meta" class="ch-mono" style="margin: 4px 0 0; font-size: 2rem; font-weight: 800;"></h1>
+                </div>
+
+
+                <div class="meta-container" style="margin-bottom: 28px;">
+                    <h5 id="base-meta" style="margin: 0; font-size: 14px; color: var(--ch-muted);"></h5>
+                    <h1 id="target-meta" class="ch-mono" style="margin: 4px 0 0; font-size: 2rem; font-weight: 800;"></h1>
+                    <p id="exchange-rate" style="margin: 8px 0 0; font-size: 12px; color: var(--ch-muted);"></p>
+                    <p id="update-at" style="margin: 2px 0 0; font-size: 11px; color: var(--ch-muted-soft);"></p>
+                </div>
+
+                <!-- Formulaire de saisie -->
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+
+                    <!-- Ligne d'Entrée -->
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <span class="ch-label">DE</span>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <select id="currency-first" placeholder="Choisissez une devise source..." style="width: 120px;" ></select>
+                            <input type="number" id="first-input" class="ch-input" style="flex: 1;" placeholder="Entrez le montant" autofocus>
+                        </div>
+                    </div>
+
+                    <!-- Séparateur -->
+                    <div class="ch-divider">
+                        <button id="switchBtn" class="ch-btn-swap"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
+                    </div>
+
+                    <!-- Ligne de Sortie : VERS -->
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <span class="ch-label">VERS</span>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <select id="currency-second" placeholder="Choisissez une devise cible..." style="width: 120px;"></select>
+                            <input type="text" id="second-input" class="ch-result-field" disabled>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Bloc des Taux Populaires secondaires -->
+                <div style="margin-top: 32px; padding-top: 20px; border-top: 1.5px solid var(--ch-line);">
+                    <div class="ch-label" style="margin-bottom: 12px;">Taux du jour</div>
+                    <div class="ch-rate-row"><span class="ch-rate-label">EUR &rarr; USD</span><span class="ch-rate-value">1.0850</span></div>
+                    <div class="ch-rate-row"><span class="ch-rate-label">EUR &rarr; GBP</span><span class="ch-rate-value">0.8560</span></div>
+                    <div class="ch-rate-row"><span class="ch-rate-label">EUR &rarr; JPY</span><span class="ch-rate-value">161.20</span></div>
+                    <div class="ch-rate-row"><span class="ch-rate-label">EUR &rarr; CHF</span><span class="ch-rate-value">0.9810</span></div>
+                </div>
+
+            </section>
+
+            <!-- ==================== SECTION B : CONVERTISSEUR DE DISTANCES ==================== -->
+            <section id="units-converter-page" class="page" style="display: none;">
+
+                <!-- En-tête de section -->
+                <div class="meta-container" style="margin-bottom: 28px;">
+                    <h5 style="margin: 0; font-size: 14px; color: var(--ch-muted);">Conversion d'unité</h5>
+                    <h1 id="result-meta" class="ch-mono" style="margin: 4px 0 0; font-size: 2rem; font-weight: 800;"></h1>
+                </div>
+
+                <!-- Formulaire de saisie vertical épuré -->
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+
+                    <!-- Ligne d'Entrée : DE -->
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <span class="ch-label">DE</span>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <select id="unit-first" placeholder="Choisissez l'unité source..." style="width: 120px;"></select>
+                            <input type="number" id="unit-input" class="ch-input" style="flex: 1;" placeholder="1">
+                        </div>
+                    </div>
+
+                    <!-- Séparateur horizontal-->
+                    <div class="ch-divider">
+                        <button id="switchUnitBtn" class="ch-btn-swap"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
+                    </div>
+
+                    <!-- Ligne de Sortie-->
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        <span class="ch-label">VERS</span>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <select id="unit-second" style="width: 120px;" placeholder="Choisissez l'unité cible..."></select>
+
+                            <input type="text" id="unit-result-input" class="ch-result-field" disabled placeholder="">
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+    </main>
+
+</div>
+{% endblock %}
+{% block script %}
+    <script src="{% static 'ConverApp/script.js' %}" defer></script>
+{% endblock %}

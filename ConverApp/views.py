@@ -18,8 +18,10 @@ def home(request):
     return render(request, "ConverApp/home.html")
 
 
-def index(request):
-    return render(request, 'ConverApp/index.html')
+def tools(request, tool):
+    return render(request, 'ConverApp/tools.html', {
+        'tool': tool,
+    })
 
 
 @require_GET

@@ -62,8 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
 //     Load currency convert page by default
-    showPage('currency-converter-page')
-    switchPageBtn('currency-converter-page')
+    const selectTool = document.querySelector('#select-tool').value
+    showPage(selectTool)
+    switchPageBtn(selectTool)
 
 })
 
@@ -390,4 +391,5 @@ function units_convert(AMOUNT, BASE_COEFF, TARGET_COEFF) {
 
     console.log(resultatArrondi)
     document.querySelector('#result-meta').innerHTML = `${AMOUNT} ${firstUnitSelect.options[firstUnitSelect.getValue()].text} =  ${resultatArrondi} ${secondUnitSelect.options[secondUnitSelect.getValue()].text}`
+    document.querySelector('#unit-result-input').value = `${resultatArrondi}`
 }

@@ -7,24 +7,16 @@
 <div class="ch-page-wrap" style="background-color: #f0fdf4; padding: 0 20px 40px;"> <!-- Utilisation du fond d'écran vert sauge écolo de ta maquette -->
 
     <!-- ==================== HEADER  ==================== -->
-    <header class="ch-topbar ch-animate-in" style="width: 100%; max-width: 1200px; margin: 12px auto 48px; background: transparent; border-bottom: none;">
+    <header class="ch-navbar-pill ch-animate-in">
 
         <!-- Logo de marque  -->
-        <div style="display: flex; align-items: center; gap: 8px;">
+       <div style="display: flex; align-items: center; gap: 8px;">
+        <a href="{% url 'home' %}">
+            <img src="{% static 'ConverApp/Brand images/logo-dark.png' %}" alt="ConverHub Logo" style="height: 34px; width: auto;">
+        </a>
+    </div>
 
-            <img src="{% static 'ConverApp/Brand images/logo-dark.png' %}" alt="ConverHub Logo" style="height: 36px; width: auto;">
-{#            <span class="ch-brand" style="font-size: 1.4rem; color: var(--ch-ink);">Conver<span style="color: var(--ch-accent);">Hub</span></span>#}
-        </div>
-
-        <!-- Menu déroulant -->
-        <div style="position: relative; display: inline-block;" class="ch-dropdown">
-
-            <ul class="ch-dropdown-menu" style="position: absolute; top: 100%; left: 50%; transform: translateX(-50%); display: none; background: var(--ch-card); border: 1.5px solid var(--ch-line); border-radius: 12px; padding: 8px; width: 200px; box-shadow: var(--ch-shadow-card); list-style: none; margin-top: 8px; z-index: 100;">
-
-                <li><a href="[ROUTE_VERS_index_PAGE_DEVISE]" style="padding: 8px 12px; display: block; border-radius: 8px; text-decoration: none; color: var(--ch-ink); font-size: 0.87rem; font-weight: 600;">💱 Convertisseur de devise</a></li>
-                <li><a href="[ROUTE_VERS_index_PAGE_DISTANCE]" style="padding: 8px 12px; display: block; border-radius: 8px; text-decoration: none; color: var(--ch-ink); font-size: 0.87rem; font-weight: 600;">📏 Convertisseur de distance</a></li>
-            </ul>
-
+          <div> <a href="{% url 'tools' "currency-converter-page"%}" class="ch-btn ch-btn-primary" style="border-radius: var(--ch-radius-pill);">Explorer les outils</a>
         </div>
 
     </header>
@@ -57,17 +49,17 @@
     <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; width: 100%; max-width: 640px;" class="ch-animate-in">
 
 
-        <a href="[ROUTE_VERS_index_PAGE_DEVISE]" class="ch-card-sm" style="flex: 1; min-width: 260px; text-align: center; border: 1.5px solid var(--ch-line); transition: transform 0.2s ease, box-shadow 0.2s ease; text-decoration: none;">
-            <div style="font-size: 2.2rem; margin-bottom: 12px;">💱</div>
+        <a href="{% url "tools" "currency-converter-page"%}" class="ch-card-sm" style="flex: 1; min-width: 260px; text-align: center; border: 1.5px solid var(--ch-line); transition: transform 0.2s ease, box-shadow 0.2s ease; text-decoration: none;">
+            <div style="font-size: 2.2rem; margin-bottom: 12px;"><i class="fa-solid fa-money-bill-transfer" style="color: rgb(30, 142, 90);"></i></div>
             <h3 style="margin-bottom: 6px; font-weight: 700;">Convertisseur de devises</h3>
             <p style="font-size: 0.87rem; color: var(--ch-muted); margin: 0;">Consultez les taux de change et convertissez vos monnaies en temps réel.</p>
         </a>
 
 
-        <a href="[ROUTE_VERS_index_PAGE_DISTANCE]" class="ch-card-sm" style="flex: 1; min-width: 260px; text-align: center; background: var(--ch-ink); border: 1.5px solid var(--ch-ink); transition: transform 0.2s ease, box-shadow 0.2s ease; text-decoration: none;">
-            <div style="font-size: 2.2rem; margin-bottom: 12px;">📏</div>
+        <a href="{% url "tools" "units-converter-page"%}" class="ch-card-sm" style="flex: 1; min-width: 260px; text-align: center; background: var(--ch-ink); border: 1.5px solid var(--ch-ink); transition: transform 0.2s ease, box-shadow 0.2s ease; text-decoration: none;">
+            <div style="font-size: 2.2rem; margin-bottom: 12px;"><i class="fa-solid fa-ruler" style="color: rgb(253, 253, 253);"></i></div>
             <h3 style="margin-bottom: 6px; font-weight: 700; color: #fff;">Convertisseur d'unité</h3>
-            <p style="font-size: 0.87rem; color: var(--ch-muted-soft); margin: 0;">Convertissez instantanément vos mesures : m, cm et mm.</p>
+            <p style="font-size: 0.87rem; color: var(--ch-muted-soft); margin: 0;">Convertissez instantanément vos mesures : m, cm, mm et plus.</p>
         </a>
 
     </div>

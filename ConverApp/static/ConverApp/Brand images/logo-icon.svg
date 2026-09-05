@@ -1,0 +1,8 @@
+<svg width="48" height="48" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- ConverHub icon — fond vert, flèches blanches -->
+  <rect width="36" height="36" rx="10" fill="#1e8e5a"/>
+  <path d="M10 13h12M22 13l-3-3M22 13l-3 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M26 23H14M14 23l3-3M14 23l3 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="27.5" cy="13" r="1.5" fill="#c3e8d4"/>
+  <circle cx="8.5" cy="23" r="1.5" fill="#c3e8d4"/>
+</svg>

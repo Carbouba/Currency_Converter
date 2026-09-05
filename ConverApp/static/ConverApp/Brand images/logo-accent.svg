@@ -1,0 +1,11 @@
+<svg width="160" height="40" viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- ConverHub wordmark — fond accent vert, variante monochrome blanc -->
+  <!-- Icône (contour blanc) -->
+  <rect x="0" y="2" width="36" height="36" rx="10" fill="rgba(255,255,255,0.2)"/>
+  <path d="M10 15h12M22 15l-3-3M22 15l-3 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M26 25H14M14 25l3-3M14 25l3 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="27.5" cy="15" r="1.5" fill="rgba(255,255,255,0.7)"/>
+  <circle cx="8.5" cy="25" r="1.5" fill="rgba(255,255,255,0.7)"/>
+  <!-- Wordmark tout blanc -->
+  <text x="48" y="27" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="22" font-weight="800" letter-spacing="-0.6" fill="#ffffff">ConverHub</text>
+</svg>

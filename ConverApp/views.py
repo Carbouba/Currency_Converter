@@ -14,6 +14,10 @@ from django.views.decorators.http import require_GET
 get_symbole_urls = 'https://allratestoday.com/api/v1/symbols'
 
 
+def home(request):
+    return render(request, "ConverApp/home.html")
+
+
 def index(request):
     return render(request, 'ConverApp/index.html')
 

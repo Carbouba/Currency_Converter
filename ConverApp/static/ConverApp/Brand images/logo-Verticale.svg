@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="160"
+   height="87"
+   viewBox="0 0 160 87"
+   fill="none"
+   version="1.1"
+   id="svg4"
+   sodipodi:docname="logo-Verticale.svg"
+   inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="namedview4"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="2.4852344"
+     inkscape:cx="79.87174"
+     inkscape:cy="104.41671"
+     inkscape:window-width="1920"
+     inkscape:window-height="991"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4" />
+  <!-- ConverHub wordmark — fond clair, texte sombre -->
+  <!-- Icône -->
+  <!-- Wordmark — Police approximée en SVG text -->
+  <g
+     id="g7"
+     transform="translate(-2.7226805,-33.439244)">
+    <g
+       id="g5"
+       transform="matrix(1.3329569,0,0,1.3329569,61.529634,30.719455)">
+      <rect
+         x="0"
+         y="2"
+         width="36"
+         height="36"
+         rx="10"
+         fill="#1e8e5a"
+         id="rect1" />
+      <path
+         d="m 10,15 h 12 m 0,0 -3,-3 m 3,3 -3,3"
+         stroke="#ffffff"
+         stroke-width="2"
+         stroke-linecap="round"
+         stroke-linejoin="round"
+         id="path1" />
+      <path
+         d="M 26,25 H 14 m 0,0 3,-3 m -3,3 3,3"
+         stroke="#ffffff"
+         stroke-width="2"
+         stroke-linecap="round"
+         stroke-linejoin="round"
+         id="path2" />
+      <circle
+         cx="27.5"
+         cy="15"
+         r="1.5"
+         fill="#c3e8d4"
+         id="circle2" />
+      <circle
+         cx="8.5"
+         cy="25"
+         r="1.5"
+         fill="#c3e8d4"
+         id="circle3" />
+    </g>
+    <g
+       id="g6">
+      <text
+         x="3.3417664"
+         y="120.20674"
+         font-family="'Plus Jakarta Sans', Inter, sans-serif"
+         font-size="29.3251px"
+         font-weight="800"
+         letter-spacing="-0.6"
+         fill="#16181d"
+         id="text3"
+         style="stroke-width:1.33296">Conver</text>
+      <text
+         x="102.64875"
+         y="120.20674"
+         font-family="'Plus Jakarta Sans', Inter, sans-serif"
+         font-size="29.3251px"
+         font-weight="800"
+         letter-spacing="-0.6"
+         fill="#1e8e5a"
+         id="text4"
+         style="stroke-width:1.33296">Hub</text>
+    </g>
+  </g>
+</svg>

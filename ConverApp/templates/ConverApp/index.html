@@ -1,34 +1,9 @@
+{% extends 'ConverApp/base.html' %}
 {% load static %}
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Converter</title>
 
-    <!-- 📦 Tom Select (Indispensable pour l'autocomplétion - Conserve ces deux lignes) -->
-    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.6.2/dist/css/tom-select.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.6.2/dist/js/tom-select.complete.min.js"></script>
-
-    <!-- 🎨 Ton fichier CSS unique 100% pur (Aucun CDN DaisyUI ou Tailwind ici !) -->
-    <link rel="stylesheet" href="{% static 'ConverApp/style.css' %}">
-
-    <!-- FontAwesome (Conserve cette ligne) -->
-    <script src="https://kit.fontawesome.com/d17de608c3.js" crossorigin="anonymous"></script>
-</head>
-
-<!-- Google tag (gtag.js) (Conserve cette ligne) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PLB48M9XT8"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-PLB48M9XT8');
-</script>
-
-<body>
-
-<main class="page-content">
+{% block title %}ConverHub | Tools{% endblock %}
+{% block body %}
+    <main class="page-content">
 
     <!-- Alerte personnalisée (Épurée de DaisyUI) -->
     <div id="alert-div" class="custom-alert" role="alert">
@@ -91,17 +66,10 @@
 
     </div>
 </main>
+{% endblock %}
 
-<footer class="site-footer" aria-label="Informations de copyright">
-    <p>
-        &copy; {% now "Y" %}
-        <a href="https://github.com/Carbouba" target="_blank" rel="noopener noreferrer">Carbouba</a>
-        &mdash; Ultimate Converter.
-    </p>
-    <a href="https://github.com/Carbouba/Currency_Converter.git" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
-</footer>
 
 <!-- Ton script logique inchangé (Conserve cette ligne) -->
-<script src="{% static 'ConverApp/script.js' %}" defer></script>
-</body>
-</html>
+{% block script %}
+    <script src="{% static 'ConverApp/script.js' %}" defer></script>
+{% endblock %}

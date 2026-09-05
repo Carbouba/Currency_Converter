@@ -8,7 +8,8 @@ from django.urls import path
 from ConverApp import views
 
 urlpatterns = [
-    path('', views.index, name = 'home'),
+    path('tools/', views.index, name = 'index'),
+    path('', views.home, name = 'home'),
     path('api/convert/', views.convert_currency, name = 'convert_currency'),
     path('api/symbols/', views.get_symbols, name = 'currency_symbols')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

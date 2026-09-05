@@ -1,0 +1,54 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Tom Select -->
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.6.2/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.6.2/dist/js/tom-select.complete.min.js"></script>
+
+<!-- 🔤 Les 3 Polices -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+
+    <!-- Fichier CSS  -->
+    <link rel="stylesheet" href="{% static 'ConverApp/converhub-style.css' %}">
+    <link rel="stylesheet" href="{% static 'ConverApp/converhub-tokens.css' %}">
+
+    <!-- FontAwesome  -->
+    <script src="https://kit.fontawesome.com/d17de608c3.js" crossorigin="anonymous"></script>
+</head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PLB48M9XT8"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-PLB48M9XT8');
+</script>
+
+<body class="bg-slate-50 min-h-screen text-slate-800">
+{% block body %}
+{% endblock %}
+
+
+<footer class="ch-footer" aria-label="Informations de copyright">
+    <p>
+        &copy; {% now "Y" %}
+        <a href="https://github.com/Carbouba" target="_blank" rel="noopener noreferrer">Carbouba</a>
+        &mdash; ConverHub.
+    </p>
+    <a href="https://github.com/Carbouba/Currency_Converter.git" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+</footer>
+
+
+{% block script %}
+{% endblock %}
+</body>
+</html>

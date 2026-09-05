@@ -285,6 +285,91 @@ p {
 }
 
 
+/* =========================================================
+   1. MENU HAMBURGER & TIROIR MOBILE (Mobile-First) [1.1]
+   ========================================================= */
+
+/* Barre supérieure visible uniquement sur mobile */
+.ch-mobile-header {
+    position: sticky;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: var(--ch-card);
+    border-bottom: 1.5px solid var(--ch-line);
+    width: 100%;
+}
+
+/* Le voile sombre d'arrière-plan */
+.ch-sidebar-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(16, 24, 32, 0.4);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+}
+
+.ch-sidebar-backdrop.is-active {
+    display: block;
+}
+
+/* La Sidebar transformée en tiroir coulissant sur mobile */
+.ch-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    z-index: 1000;
+    background: var(--ch-card);
+    box-shadow: var(--ch-shadow-elevated);
+    display: flex;
+    flex-direction: column;
+    padding: 24px 16px;
+    gap: 6px;
+
+    /* 🚀 L'animation de glissement : caché hors écran à gauche [1.1] */
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Quand le tiroir s'ouvre ! */
+.ch-sidebar.is-open {
+    transform: translateX(0%);
+}
+
+
+/* =========================================================
+   2. RETOUR SUR GRAND ÉCRAN (PC de bureau) [1.1]
+   ========================================================= */
+
+@media (min-width: 769px) {
+
+    /* On cache l'en-tête mobile et le voile sombre sur PC */
+    .ch-mobile-header,
+    .ch-sidebar-backdrop {
+        display: none !important;
+    }
+
+    .ch-app-shell {
+        display: grid;
+        grid-template-columns: 240px 1fr;
+    }
+
+    /* La Sidebar redevient statique et fixe à gauche sur PC */
+    .ch-sidebar {
+        position: static;
+        width: auto;
+        min-height: 100vh;
+        box-shadow: none;
+        border-right: 1.5px solid var(--ch-line);
+        transform: none !important; /* Pas de glissement sur grand écran [1.1] */
+    }
+}
+
 .ch-main {
     background: var(--ch-page);
     padding: 28px;
@@ -685,9 +770,6 @@ footer, .ch-footer {
         /*grid-template-rows: 56px 1fr;*/
     }
 
-    .ch-sidebar {
-        display: none; /* Remplacer par un menu hamburger en production */
-    }
 
     .ch-main {
         padding: 20px 16px;

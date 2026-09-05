@@ -63,8 +63,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //     Load currency convert page by default
     const selectTool = document.querySelector('#select-tool').value
-    showPage(selectTool)
+    goToPage(selectTool)
     switchPageBtn(selectTool)
+
+})
+
+// Side barre hamburger menu trigger
+document.querySelector('#menu-toggle-btn').addEventListener('click', () => {
+    document.querySelector('.ch-sidebar').classList.add('is-open')
+    document.querySelector('#sidebar-backdrop').classList.add('is-active')
+
+})
+document.querySelector('#sidebar-backdrop').addEventListener('click', () => {
+    document.querySelector('.ch-sidebar').classList.remove('is-open')
 
 })
 
@@ -100,6 +111,8 @@ buttons.forEach(btn => {
   btn.addEventListener("click", () => {
     const targetId = btn.dataset.page; // ex: "currency-converter-page"
     goToPage(targetId);
+    document.querySelector('.ch-sidebar').classList.remove('is-open');
+document.querySelector('#sidebar-backdrop').classList.remove('is-active');
 
     // Mettre le bouton actif (couleur)
     buttons.forEach(b => b.classList.remove("active-page-tab"));

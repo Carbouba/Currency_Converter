@@ -8,6 +8,16 @@
 <!-- L'App Shell global à deux colonnes -->
 <div class="ch-app-shell">
 
+<!-- Petite barre supérieure réservée exclusivement au mobile -->
+<div class="ch-mobile-header">
+    <button id="menu-toggle-btn" class="ch-btn ch-btn-ghost" style="font-size: 1.3rem;">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+</div>
+
+<!-- Voile sombre d'arrière-plan quand le tiroir est ouvert -->
+<div id="sidebar-backdrop" class="ch-sidebar-backdrop"></div>
+
     <!-- ==================== COLONNE GAUCHE : LA SIDEBAR ==================== -->
     <aside class="ch-sidebar">
 
@@ -72,7 +82,7 @@
                         <span class="ch-label">DE</span>
                         <div style="display: flex; gap: 10px; align-items: center;">
                             <select id="currency-first" placeholder="Choisissez une devise source..." style="width: 120px;" ></select>
-                            <input type="number" id="first-input" class="ch-input" style="flex: 1;" placeholder="Entrez le montant" autofocus>
+                            <input type="number" id="first-input" class="ch-input" style="flex: 1;" placeholder="Entrez le montant">
                         </div>
                     </div>
 

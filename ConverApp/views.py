@@ -33,7 +33,7 @@ def convert_currency(request):
 
     try:
         float(amount)
-    except ValueError:
+    except ValueError, TypeError:
         return JsonResponse({'error': 'Entrez un montant valide'})
 
     if not source or not target:
